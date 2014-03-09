@@ -5,17 +5,17 @@ var exec = require('child_process').execFile;
 var index = '' + fs.readFileSync('./index.html');
 
 var freq = '101.1';
-var rate = '44200';
+var rate = '88400';
 var song = '---';
 
-var process = null;
+var proc = null;
 
 function getIndex() {
   return index
     .replace('$freq', freq)
     .replace('$rate', rate)
     .replace('$song', song)
-    .replace('$playing', (!process ? 'not ' : '') + 'playing');
+    .replace('$playing', (!proc ? 'not ' : '') + 'playing');
 }
 
 function getSongSel(res) {
@@ -47,15 +47,16 @@ function getSongSel(res) {
 }
 
 function start(req, res, home) {
-  process = exec('./pifm', ['./songs/' + song, freq, rate], null, function() {
-    process = null;
+  if (proc) proc.kill();
+  proc = exec('./pifm', ['./songs/' + song, freq, rate], null, function() {
+    proc = null;
   });
   home();
 }
 
 function stop() {
-  process && process.kill();
-  process = null;
+  proc && proc.kill();
+  proc = null;
 }
 
 http.createServer(function(req, res) {
@@ -93,4 +94,4 @@ http.createServer(function(req, res) {
   } else {
     res.end('no');
   }
-}).listen(process.env.PORT || 8080);
+}).listen(process.env.PORT || 80);
