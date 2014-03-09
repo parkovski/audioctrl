@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Audio Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <form action="/freq" method="get">
+      Freq:
+      <input type="text" value="$freq" name="x">
+      <button type="submit">-&gt;</button>
+    </form>
+    <form action="/rate" method="get">
+      Rate:
+      <input type="text" value="$rate" name="x">
+      <button type="submit">-&gt;</button>
+    </form>
+    Song: $song | <a href="/song">pick</a>
+    <br>$playing<br>
+    <form action="/start"><button type="submit">start</button></form>
+    <form action="/stop"><button type="submit">stop</button></form>
+  </body>
+</html>
